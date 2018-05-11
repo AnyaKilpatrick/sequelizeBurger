@@ -1,0 +1,54 @@
+<div class="parallax-container">
+    <div class="parallax"><img src="/assets/img/wallpaper2.jpg"></div>
+</div>
+<div class="section white">
+    <div class="row container">
+        {{!-- --------------------------------- --}}
+        <div class="row">
+            <div class="col s12 center"><h1>Eat-Da-Burger</h1></div>
+            <div class="col s12 m5 l3 xl4">
+                <h5>I want to eat..</h5>
+                {{!-- if devoured=false display them here --}}
+                <ul>
+                    {{#each burgers}}
+                    {{#unless devoured}}
+                        <li>
+                            <p>
+                                {{burger_name}}
+                                <button type="button" data-burgerid="{{id}}" class="eatBurger"><i class="tiny material-icons">restaurant</i> Devour</button>
+                            </p> 
+                        </li>
+                    {{/unless}}
+                    {{/each}}
+                </ul>
+            </div>
+            {{!-- form --}}
+            <div class="col s11 m5 l3 xl3 offset-l1">
+                <form class="create-form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="newBurgerName" name="name" placeholder="burger name"></input>
+                        <br />
+                        <button class="btn btn-primary light-green darken-3 z-depth-5" type="submit">Submit</button>
+                        <p>Enter a burger you want to add.<br>Click the "Submit" button</p>
+                    </div>
+                </form>
+            </div>
+            <div class="col s11 m5 l3 xl3 offset-xl1 offset-l1">
+                <h5>I've already had..</h5>
+                {{!-- if devoured=true display them here --}}
+                <ul>
+                    {{#each burgers}}
+                    {{#if devoured}}
+                        <li>
+                            <p>{{burger_name}}</p>
+                        </li>
+                    {{/if}}
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="parallax-container">
+    <div class="parallax"><img src="/assets/img/wallpaper2.jpg"></div>
+</div>

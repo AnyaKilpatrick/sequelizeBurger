@@ -1,0 +1,12 @@
+/* customizing the height of parallax */
+.parallax-container {
+    height: 240px;
+}
+/* seting all h5 elements to green */
+h5 {
+    color: #558b2f;
+}
+/* hiding scrollbar */
+::-webkit-scrollbar { 
+    display: none; 
+}
