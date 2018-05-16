@@ -4,11 +4,13 @@ var router = express.Router();
 var db = require("../models");
 
 router.get("/", function(req, res){
-    db.Burger.findAll({}).then(function(results){
+    db.Burger.findAll({
+        include:[db.Customer]
+    }).then(function(results){
         var hbsObject = {
             burgers: results
         };
-        console.log(hbsObject);
+        console.log(JSON.stringify(hbsObject));
         res.render("index", hbsObject)
     })
 });
@@ -23,12 +25,28 @@ router.post("/api/burgers", function(req, res){
     })
 });
 
+router.post("/api/customers", function(req, res){
+    console.log(req.body.name + req.body.ate);
+    db.Customer.findOrCreate({
+        where: {
+            id: req.body.name
+            }
+    }).then(function(results){
+        if(results.changedRows == 0){
+            return res.status(404).end();
+        }else{
+            res.status(200).end();       
+        }
+    })
+})
+
 router.put("/api/burgers/:id", function(req, res){
     var id = req.params.id;
 
     db.Burger.update(
         {
-            devoured: req.body.devoured
+            devoured: req.body.devoured,
+            CustomerId: req.body.CustomerId
         },
         {
             where: {
@@ -43,5 +61,6 @@ router.put("/api/burgers/:id", function(req, res){
         }
     })
 })
+
 
 module.exports = router;
