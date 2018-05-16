@@ -10,3 +10,8 @@ h5 {
 ::-webkit-scrollbar { 
     display: none; 
 }
+/* customer name input */
+#customerName {
+    width: 110px;
+    font-size: 24px;
+}
