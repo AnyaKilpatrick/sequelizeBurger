@@ -49,6 +49,8 @@ $(".eatBurger").on("click", function(){
         var customerName = $("#customerName").val().trim();
 
         // creating object for burger put request
+        // Burger can't be updated before customer was created, because customer is a parent model.
+        // we are wrapping request in a function and call it when customer is created
         function updateBurger(){
             var eatenBurger = {
                 devoured: 1,
@@ -71,6 +73,7 @@ $(".eatBurger").on("click", function(){
             data:customer
         }).then(function(){
             console.log("customer was added");
+            // updating the burger info
             updateBurger();
             location.reload();
         })
