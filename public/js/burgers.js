@@ -5,14 +5,14 @@ $(document).ready(function(){
 // creating new burger
 $(".create-form").on("submit", function(event){
     event.preventDefault();
-    function validateForm(){
+    function validateFormOne(){
         var isValid = true;
         if($("#newBurgerName").val().trim() === ""){
             isValid=false;
         }
         return isValid;
     }
-    if (validateForm()){
+    if (validateFormOne()){
         // grabbing input
         var newBurger = {
             name:$("#newBurgerName").val().trim()
@@ -31,20 +31,50 @@ $(".create-form").on("submit", function(event){
 
 // updating burger (setting devoured to true)
 $(".eatBurger").on("click", function(){
-    //grabbing a unique id to define which burger to update
-    var uniqueId = $(this).data("burgerid");
-    console.log("data: "+ uniqueId);
-    // 
-    var eatenBurger = {
-        devoured: 1
+    function validateFormTwo(){
+        var isValid=true;
+        var customerLength = $("#customerName").val().trim().length;
+        if($("#customerName").val().trim() === ""){
+            isValid=false;
+        }
+        if(customerLength <=1 || customerLength >=21){
+            isValid=false;
+        }
+        return isValid;
     }
-    $.ajax("/api/burgers/"+uniqueId, {
-        type:"PUT",
-        data:eatenBurger
-    }).then(function(){
-        console.log("burger was devoured");
-        location.reload();
-    })
+    if(validateFormTwo()){
+        //grabbing a unique id to define which burger to update
+        var uniqueId = $(this).data("burgerid");
+        console.log("data: "+ uniqueId);
+        var customerName = $("#customerName").val().trim();
+
+        // creating object for burger put request
+        function updateBurger(){
+            var eatenBurger = {
+                devoured: 1,
+                CustomerId: customerName
+            }
+            $.ajax("/api/burgers/"+uniqueId, {
+                type:"PUT",
+                data:eatenBurger
+            }).then(function(req, res){
+                console.log("burger was devoured");
+            })
+        }
+
+        // creating object for customer post request
+        var customer = {
+            name: customerName
+        }
+        $.ajax("/api/customers", {
+            type:"POST",
+            data:customer
+        }).then(function(){
+            console.log("customer was added");
+            updateBurger();
+            location.reload();
+        })
+    }
 })
 
 
